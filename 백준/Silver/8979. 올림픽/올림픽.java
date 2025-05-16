@@ -21,7 +21,6 @@ public class Main {
 
     static int n, k;
     static List<NationMedal> nationMedals = new ArrayList<>();
-    static int goldGap, silverGap, bronzeGap;
 
     public static void main(String[] args) throws IOException {
 
@@ -46,23 +45,35 @@ public class Main {
 
         nationMedals.sort((nation1, nation2) -> {
 
-            goldGap = nation1.gold - nation2.gold;
-            silverGap = nation1.silver - nation2.silver;
-            bronzeGap = nation1.bronze - nation2.bronze;
-
-            if(goldGap == 0) {
-                if(silverGap == 0) {
-                    return bronzeGap;
-                }
-                return silverGap;
-            }
-
-            return goldGap;
+            if (nation2.gold != nation1.gold)
+                return nation2.gold - nation1.gold;
+            if (nation2.silver != nation1.silver)
+                return nation2.silver - nation1.silver;
+            return nation2.bronze - nation1.bronze;
         });
 
-        for(int i = 0; i < nationMedals.size(); i++) {
-            if(nationMedals.get(i).nationNumber == k)
-                System.out.println(i);
+        int rank = 1;
+        
+        NationMedal prev = nationMedals.get(0);
+
+        if (prev.nationNumber == k) {
+            System.out.println(rank);
+            return;
+        }
+
+        for (int i = 1; i < nationMedals.size(); i++) {
+            NationMedal curr = nationMedals.get(i);
+
+            if (curr.gold != prev.gold || curr.silver != prev.silver || curr.bronze != prev.bronze) {
+                rank = i + 1;
+            }
+
+            if (curr.nationNumber == k) {
+                System.out.println(rank);
+                return;
+            }
+
+            prev = curr;
         }
     }
 }
