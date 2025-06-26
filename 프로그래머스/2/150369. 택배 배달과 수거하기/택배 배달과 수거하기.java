@@ -1,6 +1,6 @@
 class Solution {
     public long solution(int cap, int n, int[] deliveries, int[] pickups) {
-        long answer = -1;
+        long answer = 0;
         int deliver = 0, pickup = 0;
         
         /*
@@ -27,6 +27,6 @@ class Solution {
         }
         
         
-        return answer + 1;
+        return answer;
     }
 }
